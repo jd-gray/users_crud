@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  enum status: { active: 0, inactive: 1 }
+
   validates_presence_of :name, :email, :phone, :status
   validates :email,  
             format: { with: URI::MailTo::EMAIL_REGEXP, message: "Email invalid"  }, 
