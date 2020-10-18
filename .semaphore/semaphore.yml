@@ -1,0 +1,30 @@
+version: v1.0
+name: Users CRUD Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Setup
+    task:
+      jobs:
+        - name: bundle
+          commands:
+            - checkout
+            - cache restore
+            - gem install bundler
+            - bundle install --deployment -j 4 --path vendor/bundle
+            - cache store
+  - name: Unit tests
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - sem-service start postgres
+          - bundle install --deployment --path vendor/bundle
+          - bundle exec rake db:setup
+      jobs:
+        - name: RSpec - model tests
+          commands:
+            - bundle exec rspec spec/models
