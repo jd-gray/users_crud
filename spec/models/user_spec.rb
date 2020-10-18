@@ -47,5 +47,24 @@ RSpec.describe User, type: :model do
         expect(duplicate_user).to_not be_valid
       end
     end
+
+    describe "Phone" do
+      it "is valid with valid format" do
+        subject.phone = "714-767-6304"
+        expect(subject).to be_valid
+      end
+
+      it "is NOT valid with invalid format" do
+        subject.phone = "(714)-767-6304"
+        expect(subject).to_not be_valid
+
+        subject.phone = "1-714-767-6304"
+        expect(subject).to_not be_valid
+
+        subject.phone = "714 767 6304"
+        expect(subject).to_not be_valid
+        expect(subject.errors.messages[:phone]).to eq ["Phone must be format ###-###-####"]
+      end
+    end
   end
 end
