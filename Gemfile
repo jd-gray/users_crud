@@ -13,6 +13,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faker', '~> 1.6', '>= 1.6.3'
 gem 'activerecord-import', '~> 1.0', '>= 1.0.7'
+gem 'will_paginate', '~> 3.3'
 
 group :development, :test do
   gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
