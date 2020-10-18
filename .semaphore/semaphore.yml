@@ -14,6 +14,8 @@ blocks:
             - cache restore
             - gem install bundler
             - bundle install --deployment -j 4 --path vendor/bundle
+            - sem-version node 10.13.0
+            - yarn install --check-files
             - cache store
   - name: Unit tests
     task:
@@ -23,6 +25,8 @@ blocks:
           - cache restore
           - sem-service start postgres
           - bundle install --deployment --path vendor/bundle
+          - sem-version node 10.13.0
+          - yarn install --check-files
           - bundle exec rake db:setup
       jobs:
         - name: RSpec - model tests
