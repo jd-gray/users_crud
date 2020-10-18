@@ -32,3 +32,10 @@ blocks:
         - name: RSpec - model tests
           commands:
             - bundle exec rspec spec/models
+promotions:
+  - name: Heroku Deployment
+    pipeline_file: heroku.yml
+    auto_promote_on: 
+    - result: passed
+      branch: 
+        - "master"
