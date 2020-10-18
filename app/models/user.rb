@@ -4,4 +4,8 @@ class User < ApplicationRecord
             format: { with: URI::MailTo::EMAIL_REGEXP, message: "Email invalid"  }, 
             uniqueness: { case_sensitive: false }
   validates :phone, format: { with: /\A\d{3}-\d{3}-\d{4}\z/, message: "Phone must be format ###-###-####" }
+
+  scope :filter_all_fields, -> (search) {
+    where("#{column_names.join(' || ')} like ?", "%#{search}%")
+  }
 end

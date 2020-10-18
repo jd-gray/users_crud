@@ -8,21 +8,24 @@ module Filterable
       @params = params
     end
 
-    def users_response
-      @users = User.where(nil).paginate(page: current_page, per_page: PAGE_LIMIT)
+    def response
+      users = User.where(nil)
+      users = users.filter_all_fields(params[:search]) if params[:search].present?
+      
+      @paginated_users = users.paginate(page: current_page, per_page: PAGE_LIMIT)
 
       { 
         total_pages: total_pages,
         next_page: next_page,
         previous_page: previous_page,
-        users: @users 
+        users: @paginated_users
       }
     end
 
     private
 
     def total_pages
-      @users.total_pages
+      @paginated_users.total_pages
     end
 
     def current_page
