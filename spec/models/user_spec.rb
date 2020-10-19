@@ -67,4 +67,63 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "Scopes" do
+    before do
+      @brooklyn = User.create!(name: "Brooklyn", email: "bigdog@yahoo.com", phone: "123-999-9999", status: 1, created_at: DateTime.now)
+      @shrimp = User.create!(name: "Shrimp", email: "crazydog@aol.com", phone: "890-999-9999", created_at: DateTime.now - 2.days)
+      @moses = User.create!(name: "Moses", email: "shydog@gmail.com", phone: "234-999-9999", created_at: DateTime.now - 1.day)
+    end
+
+    describe "filter_by_fields" do
+      it "filters by name" do
+        expect(User.filter_by_fields("shrimp")).to include(@shrimp)
+        expect(User.filter_by_fields("shrimp")).to_not include(@brooklyn, @moses)
+      end
+
+      it "filters by email" do
+        expect(User.filter_by_fields("shydog")).to include(@moses)
+        expect(User.filter_by_fields("shydog")).to_not include(@brooklyn, @shrimp)
+      end
+
+      it "filters by phone" do
+        expect(User.filter_by_fields("890-999-9999")).to include(@shrimp)
+        expect(User.filter_by_fields("890-999-9999")).to_not include(@brooklyn, @moses)
+      end
+
+      it "filters by status enum" do
+        expect(User.filter_by_fields(0)).to include(@shrimp, @moses)
+        expect(User.filter_by_fields(0)).to_not include(@brooklyn)
+      end
+
+      it "returns empty array if no results" do
+        expect(User.filter_by_fields("something doesnt make sense")).to eq []
+      end
+    end
+ 
+    describe "sort_by_fields" do
+      it "sorts by name" do
+        expect(User.sort_by_fields("name")).to eq [@brooklyn, @moses, @shrimp]
+        expect(User.sort_by_fields("-name")).to eq [@brooklyn, @moses, @shrimp].reverse
+      end
+
+      it "sorts by email" do
+        expect(User.sort_by_fields("email")).to eq [@brooklyn, @shrimp, @moses]
+        expect(User.sort_by_fields("-email")).to eq [@brooklyn, @shrimp, @moses].reverse
+      end
+
+      it "sorts by phone" do
+        expect(User.sort_by_fields("phone")).to eq [@brooklyn, @moses, @shrimp]
+        expect(User.sort_by_fields("-phone")).to eq [@brooklyn, @moses, @shrimp].reverse
+      end
+
+      it "sorts by status" do
+        expect(User.sort_by_fields("status")).to eq [@shrimp, @moses, @brooklyn]
+      end
+
+      it "sorts by created_at desc when column is invalid" do
+        expect(User.sort_by_fields("bad_column")).to eq [@brooklyn, @moses, @shrimp]
+      end
+    end
+  end
 end
