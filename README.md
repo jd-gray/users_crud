@@ -1,24 +1,33 @@
-# README
+# Rails 6 + React Users CRUD
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Getting Started
 
-Things you may want to cover:
+Clone the repository:
 
-* Ruby version
+```
+git clone https://github.com/jd-gray/users_crud.git
+```
 
-* System dependencies
+Install dependencies:
 
-* Configuration
+```
+bundle install
+```
 
-* Database creation
+Create and migrate your database:
 
-* Database initialization
+``` 
+rails db:setup
+```
 
-* How to run the test suite
+Run your local rails server:
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+rails s
+```
 
-* Deployment instructions
+Have questions? Issue starting the application? Please let me know!
 
-* ...
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
