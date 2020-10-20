@@ -9,12 +9,14 @@ const UsersTable = () => {
     return <div>Loading..</div>;
   }
 
-  const users = usersState.loaded ? usersState.users : [];
-  const previousPage = usersState.loaded ? usersState.previousPage : 0;
-  const nextPage = usersState.loaded ? usersState.nextPage : 0;
-  const currentPage = usersState.loaded ? usersState.currentPage : 1;
-  const totalPages = usersState.loaded ? usersState.totalPages : 0;
-
+  const {
+    users,
+    previous_page: previousPage,
+    next_page: nextPage,
+    current_page: currentPage,
+    total_pages: totalPages,
+  } = usersState.data;
+  
   return (
     <div className="container">
       <table className="table">

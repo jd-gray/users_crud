@@ -17,7 +17,7 @@ const UserProvider = ({ children }) => {
   const params = new URLSearchParams(location.search);
   const pageNumber = params.get("p");
 
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState({loaded: false, loading: true});
 
   useEffect(() => {
     axios
@@ -29,11 +29,7 @@ const UserProvider = ({ children }) => {
           ...(data
             ? {
                 loaded: true,
-                users: data.users,
-                previousPage: data.previous_page,
-                nextPage: data.next_page,
-                totalPages: data.total_pages,
-                currentPage: data.current_page,
+                data: data,
               }
             : { loaded: false }),
         });
@@ -45,7 +41,7 @@ const UserProvider = ({ children }) => {
           error: e.message,
         });
       });
-  }, [pageNumber]);
+  }, [pageNumber, setUsers]);
 
   if (users.loading) {
     return <Fragment />;
