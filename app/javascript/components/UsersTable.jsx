@@ -12,6 +12,7 @@ const UsersTable = () => {
   const users = usersState.loaded ? usersState.users : [];
   const previousPage = usersState.loaded ? usersState.previousPage : 0;
   const nextPage = usersState.loaded ? usersState.nextPage : 0;
+  const currentPage = usersState.loaded ? usersState.currentPage : 1;
   const totalPages = usersState.loaded ? usersState.totalPages : 0;
 
   return (
@@ -44,18 +45,17 @@ const UsersTable = () => {
         <Link
           to={{ search: `?p=${previousPage}` }}
           className="pagination-previous"
-          disabled={previousPage === 1}
         >
           Previous
         </Link>
         <Link
           to={{ search: `?p=${nextPage}` }}
           className="pagination-next"
-          disabled={nextPage === totalPages}
         >
           Next page
         </Link>
       </nav>
+      <p>Page {currentPage} of {totalPages}</p>
     </div>
   );
 };

@@ -33,6 +33,7 @@ const UserProvider = ({ children }) => {
                 previousPage: data.previous_page,
                 nextPage: data.next_page,
                 totalPages: data.total_pages,
+                currentPage: data.current_page,
               }
             : { loaded: false }),
         });

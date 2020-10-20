@@ -18,6 +18,7 @@ module Filterable
 
       { 
         total_pages: total_pages,
+        current_page: current_page,
         next_page: next_page,
         previous_page: previous_page,
         total_users: total_users,
