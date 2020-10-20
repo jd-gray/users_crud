@@ -1,8 +1,19 @@
 import React from "react";
+import styled from "styled-components";
+import { capitalize } from "../../lib/capitalize";
+import { formatDateTime } from "../../lib/formatDateTime";
 import { useUserContext } from "../../routers/AppRouter";
 import Pagination from "./Pagination";
 import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
+
+const HeaderColumns = styled.div`
+  margin-top: 15px;
+`
+
+const Table = styled.table`
+  width: 100%;
+`;
 
 const UsersTable = () => {
   const usersState = useUserContext();
@@ -14,10 +25,16 @@ const UsersTable = () => {
   const { users } = usersState.data;
 
   return (
-    <>
-    <SearchForm />
     <div className="container">
-      <table className="table">
+      <HeaderColumns className="columns is-vcentered">
+        <div className="column">
+          <h1 className="is-size-2">User Details</h1>
+        </div>
+        <div className="column">
+          <SearchForm />
+        </div>
+      </HeaderColumns>
+      <Table className="table">
         <thead>
           <tr>
             <SortableColumn columnName={"updated_at"} displayText={"Last updated"} />
@@ -31,19 +48,18 @@ const UsersTable = () => {
         <tbody>
           {users.map((user, index) => (
             <tr key={`${user.name}-${index}`}>
-              <td>{user.updated_at}</td>
+              <td>{formatDateTime(user.updated_at)}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.title}</td>
               <td>{user.phone}</td>
-              <td>{user.status}</td>
+              <td>{capitalize(user.status)}</td>
             </tr>
             ))}
         </tbody>
-      </table>
+      </Table>
       <Pagination />
     </div>
-    </>
   );
 };
 
