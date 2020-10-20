@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../../routers/AppRouter";
+import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
 
 const UsersTable = () => {
@@ -17,8 +18,10 @@ const UsersTable = () => {
     current_page: currentPage,
     total_pages: totalPages,
   } = usersState.data;
-  
+
   return (
+    <>
+    <SearchForm />
     <div className="container">
       <table className="table">
         <thead>
@@ -60,6 +63,7 @@ const UsersTable = () => {
       </nav>
       <p>Page {currentPage} of {totalPages}</p>
     </div>
+    </>
   );
 };
 

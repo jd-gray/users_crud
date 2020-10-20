@@ -17,12 +17,13 @@ const UserProvider = ({ children }) => {
   const params = new URLSearchParams(location.search);
   const pageNumber = params.get("p");
   const sortableColumn = params.get("s");
+  const searchQuery = params.get("q");
 
   const [users, setUsers] = useState({loaded: false, loading: true});
 
   useEffect(() => {
     axios
-      .get("/api/v1/users", { params: { page: pageNumber, sort: sortableColumn } })
+      .get("/api/v1/users", { params: { page: pageNumber, sort: sortableColumn, search: searchQuery } })
       .then((response) => {
         const data = response.data;
         setUsers({
@@ -42,7 +43,7 @@ const UserProvider = ({ children }) => {
           error: e.message,
         });
       });
-  }, [pageNumber, sortableColumn, setUsers]);
+  }, [pageNumber, sortableColumn, searchQuery, setUsers]);
 
   if (users.loading) {
     return <Fragment />;
