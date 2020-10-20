@@ -23,22 +23,24 @@ const Pagination = () => {
       <div className="column">
         <p>Page <b>{currentPage}</b> of <b>{totalPages}</b></p>
       </div>
-      <PaginationColumn className="column">
-        <nav role="navigation" aria-label="pagination">
-          <Link
-            to={{ search: `?p=${previousPage}` }}
-            className="pagination-previous"
-          >
-            Previous
-          </Link>
-          <Link
-            to={{ search: `?p=${nextPage}` }}
-            className="pagination-next"
-          >
-            Next page
-          </Link>
-        </nav>
-      </PaginationColumn>
+      {totalPages > 1 && 
+        <PaginationColumn className="column">
+          <nav role="navigation" aria-label="pagination">
+            <Link
+              to={{ search: `?p=${previousPage}` }}
+              className="pagination-previous"
+            >
+              Previous
+            </Link>
+            <Link
+              to={{ search: `?p=${nextPage}` }}
+              className="pagination-next"
+            >
+              Next page
+            </Link>
+          </nav>
+        </PaginationColumn>
+      }
     </div>
   )
 };

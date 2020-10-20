@@ -9,10 +9,15 @@ import SortableColumn from "./SortableColumn";
 
 const HeaderColumns = styled.div`
   margin-top: 15px;
-`
+`;
 
 const Table = styled.table`
   width: 100%;
+`;
+
+const StatusData = styled.td`
+  color: ${props => props.status === "active" ? "hsl(141, 53%, 53%)" : "hsl(348, 100%, 61%)"};
+  font-weight: 700;
 `;
 
 const UsersTable = () => {
@@ -53,7 +58,7 @@ const UsersTable = () => {
               <td>{user.email}</td>
               <td>{user.title}</td>
               <td>{user.phone}</td>
-              <td>{capitalize(user.status)}</td>
+              <StatusData status={user.status}>{capitalize(user.status)}</StatusData>
             </tr>
             ))}
         </tbody>
