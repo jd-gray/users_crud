@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useUserContext } from "../routers/AppRouter";
+import { useUserContext } from "../../routers/AppRouter";
+import SortableColumn from "./SortableColumn";
 
 const UsersTable = () => {
   const usersState = useUserContext();
@@ -22,12 +23,12 @@ const UsersTable = () => {
       <table className="table">
         <thead>
           <tr>
-            <th>Last updated</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Title</th>
-            <th>Phone</th>
-            <th>Status</th>
+            <SortableColumn columnName={"updated_at"} displayText={"Last updated"} />
+            <SortableColumn columnName={"name"} displayText={"Name"} />
+            <SortableColumn columnName={"email"} displayText={"Email"} />
+            <SortableColumn columnName={"title"} displayText={"Title"} />
+            <SortableColumn columnName={"phone"} displayText={"Phone"} />
+            <SortableColumn columnName={"status"} displayText={"Status"} />
           </tr>
         </thead>
         <tbody>

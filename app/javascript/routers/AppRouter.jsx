@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import axios from "axios";
-import UsersTable from "../components/UsersTable";
+import UsersTable from "../components/users/UsersTable";
 
 const UserContext = createContext({});
 export const useUserContext = () => useContext(UserContext);
@@ -16,12 +16,13 @@ const UserProvider = ({ children }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const pageNumber = params.get("p");
+  const sortableColumn = params.get("s");
 
   const [users, setUsers] = useState({loaded: false, loading: true});
 
   useEffect(() => {
     axios
-      .get("/api/v1/users", { params: { page: pageNumber } })
+      .get("/api/v1/users", { params: { page: pageNumber, sort: sortableColumn } })
       .then((response) => {
         const data = response.data;
         setUsers({
@@ -41,7 +42,7 @@ const UserProvider = ({ children }) => {
           error: e.message,
         });
       });
-  }, [pageNumber, setUsers]);
+  }, [pageNumber, sortableColumn, setUsers]);
 
   if (users.loading) {
     return <Fragment />;
