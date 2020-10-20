@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useUserContext } from "../../routers/AppRouter";
+import Pagination from "./Pagination";
 import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
 
@@ -11,13 +11,7 @@ const UsersTable = () => {
     return <div>Loading..</div>;
   }
 
-  const {
-    users,
-    previous_page: previousPage,
-    next_page: nextPage,
-    current_page: currentPage,
-    total_pages: totalPages,
-  } = usersState.data;
+  const { users } = usersState.data;
 
   return (
     <>
@@ -47,21 +41,7 @@ const UsersTable = () => {
             ))}
         </tbody>
       </table>
-      <nav className="pagination" role="navigation" aria-label="pagination">
-        <Link
-          to={{ search: `?p=${previousPage}` }}
-          className="pagination-previous"
-        >
-          Previous
-        </Link>
-        <Link
-          to={{ search: `?p=${nextPage}` }}
-          className="pagination-next"
-        >
-          Next page
-        </Link>
-      </nav>
-      <p>Page {currentPage} of {totalPages}</p>
+      <Pagination />
     </div>
     </>
   );
