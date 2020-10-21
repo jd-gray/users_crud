@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../../routers/AppRouter";
-import { toast } from "react-toastify";
 
 const UpdateUserModal = ({ userToUpdate, hideModal }) => {
   const history = useHistory();
@@ -28,10 +27,8 @@ const UpdateUserModal = ({ userToUpdate, hideModal }) => {
         hideModal();
         history.push(`?s=-updated_at`);
         setUsers({ data: { users: [response.data, ...userData] } })
-        toast.success("Successfully updated user!");
       })
       .catch((e) => {
-        toast.error("Sorry there was an error updating this user!")
         console.log(e);
       })
   }

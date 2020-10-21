@@ -10,8 +10,6 @@ import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
 import CreateUserModal from "./CreateUserModal";
 import UpdateUserModal from "./UpdateUserModal";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const HeaderColumns = styled.div`
   margin-top: 15px;
@@ -45,7 +43,6 @@ const UsersTable = () => {
       .then((_response) => {
         history.push(`?p=`);
         setUsers({data: {users: userData.filter(u => u.id !== userId)}})
-        toast.success("User has been deleted!");
       })
       .catch((e) => {
         console.log(e);
@@ -100,7 +97,6 @@ const UsersTable = () => {
       {displayUpdateModal &&
         <UpdateUserModal userToUpdate={userToUpdate} hideModal={() => setDisplayUpdateModal(false)}/>
       }
-      <ToastContainer position="top-center"/>
     </div>
   );
 };
