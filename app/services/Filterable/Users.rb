@@ -9,7 +9,7 @@ module Filterable
     end
 
     def response
-      users = User.where(nil).order(created_at: :desc)
+      users = User.where(nil)
       users = users.sort_by_fields(params[:sort]) if params[:sort].present?
       users = users.filter_by_fields(params[:search]) if params[:search].present?
 
