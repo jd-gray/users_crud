@@ -6279,10 +6279,10 @@ react-router@5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-toastify@^6.0.9:
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-6.0.9.tgz#2a65e5ad9e05f3ee47664cbc69441498b9d694ce"
-  integrity sha512-StHXv+4kezHUnPyoILlvygSptQ79bxVuvKcC05yXP0FlqQgPA1ue+80BqxZZiCw2jWDGiY2MHyqBfFKf5YzZbA==
+react-toastify@^6.0.0-rc.3:
+  version "6.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-6.0.0-rc.3.tgz#9e18bcfa91d5c470e6ba31ea1d1a204647331a7b"
+  integrity sha512-ZUcrZ75P6h1m3STxvSs4NW1x1an0HyOcIh9KKBUHhJUMBhXoCV2rGDHqlBJVY3roReyFWPf4X6xkPDtYxj1r3w==
   dependencies:
     classnames "^2.2.6"
     prop-types "^15.7.2"
