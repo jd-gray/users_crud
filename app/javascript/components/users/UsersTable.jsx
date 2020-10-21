@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
 import CreateUserModal from "./CreateUserModal";
+import UpdateUserModal from "./UpdateUserModal";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -29,6 +30,8 @@ const UsersTable = () => {
   const history = useHistory();
   const usersState = useUserContext();
   const [displayCreateModal, setDisplayCreateModal] = useState(false);
+  const [displayUpdateModal, setDisplayUpdateModal] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState();
 
   if (usersState.users.loading) {
     return <div>Loading..</div>;
@@ -81,7 +84,10 @@ const UsersTable = () => {
               <td>{user.title}</td>
               <td>{user.phone}</td>
               <StatusData status={user.status}>{capitalize(user.status)}</StatusData>
-              <td><Link to="#" data-confirm="Are you sure to delete this item?" onClick={() => handleDelete(user.id)}><i className="fas fa-trash"></i></Link></td>
+              <td>
+                <Link to="#" onClick={() => {setUserToUpdate(user); setDisplayUpdateModal(true);}}><i className="fas fa-edit"></i></Link>&nbsp;&nbsp;
+                <Link to="#" data-confirm="Are you sure to delete this item?" onClick={() => handleDelete(user.id)}><i className="fas fa-trash"></i></Link>
+              </td>
             </tr>
             ))}
         </tbody>
@@ -90,6 +96,9 @@ const UsersTable = () => {
 
       {displayCreateModal &&
         <CreateUserModal hideModal={() => setDisplayCreateModal(false)}/>
+      }
+      {displayUpdateModal &&
+        <UpdateUserModal userToUpdate={userToUpdate} hideModal={() => setDisplayUpdateModal(false)}/>
       }
       <ToastContainer position="top-center"/>
     </div>
