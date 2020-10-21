@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../../routers/AppRouter";
+import { toast } from "react-toastify";
 
 const CreateUserModal = ({ hideModal }) => {
   const history = useHistory();
@@ -27,8 +28,10 @@ const CreateUserModal = ({ hideModal }) => {
         hideModal();
         history.push(`?p=`);
         setUsers({ data: { users: [response.data, ...userData] } })
+        toast.success("Successfully created user!");
       })
       .catch((e) => {
+        toast.error("Sorry there was an error creating this user!")
         console.log(e);
       })
   }

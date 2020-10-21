@@ -9,6 +9,8 @@ import Pagination from "./Pagination";
 import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
 import CreateUserModal from "./CreateUserModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HeaderColumns = styled.div`
   margin-top: 15px;
@@ -26,7 +28,7 @@ const StatusData = styled.td`
 const UsersTable = () => {
   const history = useHistory();
   const usersState = useUserContext();
-  const [displayModal, setDisplayModal] = useState(false);
+  const [displayCreateModal, setDisplayCreateModal] = useState(false);
 
   if (usersState.users.loading) {
     return <div>Loading..</div>;
@@ -40,6 +42,7 @@ const UsersTable = () => {
       .then((_response) => {
         history.push(`?p=`);
         setUsers({data: {users: userData.filter(u => u.id !== userId)}})
+        toast.success("User has been deleted!");
       })
       .catch((e) => {
         console.log(e);
@@ -51,7 +54,7 @@ const UsersTable = () => {
       <HeaderColumns className="columns is-vcentered">
         <div className="column">
           <h1 className="is-size-2">User Details</h1>
-          <button className="button is-primary" onClick={() => setDisplayModal(true)}>Create User</button>
+          <button className="button is-primary" onClick={() => setDisplayCreateModal(true)}>Create User</button>
         </div>
         <div className="column">
           <SearchForm />
@@ -85,9 +88,10 @@ const UsersTable = () => {
       </Table>
       <Pagination />
 
-      {displayModal &&
-        <CreateUserModal hideModal={() => setDisplayModal(false)}/>
+      {displayCreateModal &&
+        <CreateUserModal hideModal={() => setDisplayCreateModal(false)}/>
       }
+      <ToastContainer position="top-center"/>
     </div>
   );
 };
