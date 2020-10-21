@@ -53,7 +53,7 @@ const UserProvider = ({ children }) => {
     console.log(users.error);
   }
 
-  return <UserContext.Provider value={users}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ users, setUsers }}>{children}</UserContext.Provider>;
 };
 
 const AppRouter = () => {

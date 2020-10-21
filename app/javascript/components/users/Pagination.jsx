@@ -16,7 +16,7 @@ const Pagination = () => {
     next_page: nextPage,
     current_page: currentPage,
     total_pages: totalPages,
-  } = usersState.data;
+  } = usersState.users.data;
   
   return (
     <div className="columns is-vcentered">

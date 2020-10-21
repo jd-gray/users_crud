@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import { capitalize } from "../../lib/capitalize";
 import { formatDateTime } from "../../lib/formatDateTime";
@@ -6,6 +8,10 @@ import { useUserContext } from "../../routers/AppRouter";
 import Pagination from "./Pagination";
 import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
+import CreateUserModal from "./CreateUserModal";
+import UpdateUserModal from "./UpdateUserModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HeaderColumns = styled.div`
   margin-top: 15px;
@@ -21,19 +27,37 @@ const StatusData = styled.td`
 `;
 
 const UsersTable = () => {
+  const history = useHistory();
   const usersState = useUserContext();
+  const [displayCreateModal, setDisplayCreateModal] = useState(false);
+  const [displayUpdateModal, setDisplayUpdateModal] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState();
 
-  if (usersState.loading) {
+  if (usersState.users.loading) {
     return <div>Loading..</div>;
   }
 
-  const { users } = usersState.data;
+  const { users, setUsers } = usersState;
+  const userData = users.data.users;
+
+  const handleDelete = (userId) => {
+    axios.delete(`/api/v1/users/${userId}`)
+      .then((_response) => {
+        history.push(`?p=`);
+        setUsers({data: {users: userData.filter(u => u.id !== userId)}})
+        toast.success("User has been deleted!");
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+  }
 
   return (
     <div className="container">
       <HeaderColumns className="columns is-vcentered">
         <div className="column">
           <h1 className="is-size-2">User Details</h1>
+          <button className="button is-primary" onClick={() => setDisplayCreateModal(true)}>Create User</button>
         </div>
         <div className="column">
           <SearchForm />
@@ -52,7 +76,7 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
+          {userData.map((user, index) => (
             <tr key={`${user.name}-${index}`}>
               <td>{formatDateTime(user.updated_at)}</td>
               <td>{user.name}</td>
@@ -60,12 +84,23 @@ const UsersTable = () => {
               <td>{user.title}</td>
               <td>{user.phone}</td>
               <StatusData status={user.status}>{capitalize(user.status)}</StatusData>
-              <td></td>
+              <td>
+                <Link to="#" onClick={() => {setUserToUpdate(user); setDisplayUpdateModal(true);}}><i className="fas fa-edit"></i></Link>&nbsp;&nbsp;
+                <Link to="#" data-confirm="Are you sure to delete this item?" onClick={() => handleDelete(user.id)}><i className="fas fa-trash"></i></Link>
+              </td>
             </tr>
             ))}
         </tbody>
       </Table>
       <Pagination />
+
+      {displayCreateModal &&
+        <CreateUserModal hideModal={() => setDisplayCreateModal(false)}/>
+      }
+      {displayUpdateModal &&
+        <UpdateUserModal userToUpdate={userToUpdate} hideModal={() => setDisplayUpdateModal(false)}/>
+      }
+      <ToastContainer position="top-center"/>
     </div>
   );
 };
