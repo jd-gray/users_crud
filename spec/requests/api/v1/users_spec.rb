@@ -24,6 +24,7 @@ RSpec.describe "Users", type: :request do
         get "/api/v1/users?page=1"
       
         expect(response_body["total_pages"]).to eq 3
+        expect(response_body["current_page"]).to eq 1
         expect(response_body["next_page"]).to eq 2
         expect(response_body["previous_page"]).to eq 1
         expect(response_body["total_users"]).to eq 51
@@ -35,6 +36,7 @@ RSpec.describe "Users", type: :request do
         get "/api/v1/users?page=2"
 
         expect(response_body["total_pages"]).to eq 3
+        expect(response_body["current_page"]).to eq 2
         expect(response_body["next_page"]).to eq 3
         expect(response_body["previous_page"]).to eq 1
         expect(response_body["total_users"]).to eq 51
