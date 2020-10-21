@@ -48,6 +48,7 @@ const UsersTable = () => {
             <SortableColumn columnName={"title"} displayText={"Title"} />
             <SortableColumn columnName={"phone"} displayText={"Phone"} />
             <SortableColumn columnName={"status"} displayText={"Status"} />
+            <td><b>Actions</b></td>
           </tr>
         </thead>
         <tbody>
@@ -59,6 +60,7 @@ const UsersTable = () => {
               <td>{user.title}</td>
               <td>{user.phone}</td>
               <StatusData status={user.status}>{capitalize(user.status)}</StatusData>
+              <td></td>
             </tr>
             ))}
         </tbody>
