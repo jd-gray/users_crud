@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -8,6 +8,7 @@ import { useUserContext } from "../../routers/AppRouter";
 import Pagination from "./Pagination";
 import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
+import CreateUserModal from "./CreateUserModal";
 
 const HeaderColumns = styled.div`
   margin-top: 15px;
@@ -25,20 +26,23 @@ const StatusData = styled.td`
 const UsersTable = () => {
   const history = useHistory();
   const usersState = useUserContext();
+  const [displayModal, setDisplayModal] = useState(false);
 
-  if (usersState.loading) {
+  if (usersState.users.loading) {
     return <div>Loading..</div>;
   }
 
-  const { users, current_page: currentPage } = usersState.data;
+  const { users, setUsers } = usersState;
+  const userData = users.data.users;
 
   const handleDelete = (userId) => {
     axios.delete(`/api/v1/users/${userId}`)
       .then((_response) => {
-        history.push(`?p=${currentPage}`)
+        history.push(`?p=`);
+        setUsers({data: {users: userData.filter(u => u.id !== userId)}})
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       })
   }
 
@@ -47,6 +51,7 @@ const UsersTable = () => {
       <HeaderColumns className="columns is-vcentered">
         <div className="column">
           <h1 className="is-size-2">User Details</h1>
+          <button className="button is-primary" onClick={() => setDisplayModal(true)}>Create User</button>
         </div>
         <div className="column">
           <SearchForm />
@@ -65,7 +70,7 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
+          {userData.map((user, index) => (
             <tr key={`${user.name}-${index}`}>
               <td>{formatDateTime(user.updated_at)}</td>
               <td>{user.name}</td>
@@ -79,6 +84,10 @@ const UsersTable = () => {
         </tbody>
       </Table>
       <Pagination />
+
+      {displayModal &&
+        <CreateUserModal hideModal={() => setDisplayModal(false)}/>
+      }
     </div>
   );
 };
