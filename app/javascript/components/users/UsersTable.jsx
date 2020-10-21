@@ -1,4 +1,6 @@
 import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import { capitalize } from "../../lib/capitalize";
 import { formatDateTime } from "../../lib/formatDateTime";
@@ -21,13 +23,24 @@ const StatusData = styled.td`
 `;
 
 const UsersTable = () => {
+  const history = useHistory();
   const usersState = useUserContext();
 
   if (usersState.loading) {
     return <div>Loading..</div>;
   }
 
-  const { users } = usersState.data;
+  const { users, current_page: currentPage } = usersState.data;
+
+  const handleDelete = (userId) => {
+    axios.delete(`/api/v1/users/${userId}`)
+      .then((_response) => {
+        history.push(`?p=${currentPage}`)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
 
   return (
     <div className="container">
@@ -60,7 +73,7 @@ const UsersTable = () => {
               <td>{user.title}</td>
               <td>{user.phone}</td>
               <StatusData status={user.status}>{capitalize(user.status)}</StatusData>
-              <td></td>
+              <td><Link to="#" data-confirm="Are you sure to delete this item?" onClick={() => handleDelete(user.id)}><i className="fas fa-trash"></i></Link></td>
             </tr>
             ))}
         </tbody>
