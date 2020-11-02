@@ -8,7 +8,7 @@ import { useUserContext } from "../../routers/AppRouter";
 import Pagination from "./Pagination";
 import SearchForm from "./SearchForm";
 import SortableColumn from "./SortableColumn";
-import CreateUserModal from "./CreateUserModal";
+import CreateUserForm from "./CreateUserForm";
 import UpdateUserModal from "./UpdateUserModal";
 
 const HeaderColumns = styled.div`
@@ -92,7 +92,7 @@ const UsersTable = () => {
       <Pagination />
 
       {displayCreateModal &&
-        <CreateUserModal hideModal={() => setDisplayCreateModal(false)}/>
+        <CreateUserForm hideModal={() => setDisplayCreateModal(false)}/>
       }
       {displayUpdateModal &&
         <UpdateUserModal userToUpdate={userToUpdate} hideModal={() => setDisplayUpdateModal(false)}/>
