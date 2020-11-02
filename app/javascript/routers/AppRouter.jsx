@@ -4,10 +4,11 @@ import React, {
   useContext,
   useEffect,
   useState
-} from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
-import axios from 'axios'
-import UsersTable from '../components/users/UsersTable'
+} from 'react';
+import { Route, Switch, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import UsersTable from '../components/users/UsersTable';
+import PropTypes from 'prop-types';
 
 const UserContext = createContext({})
 export const useUserContext = () => useContext(UserContext)
@@ -55,6 +56,10 @@ const UserProvider = ({ children }) => {
 
   return <UserContext.Provider value={{ users, setUsers }}>{children}</UserContext.Provider>
 }
+
+UserProvider.propTypes = {
+  children: PropTypes.element.isRequired
+};
 
 const AppRouter = () => {
   return (
