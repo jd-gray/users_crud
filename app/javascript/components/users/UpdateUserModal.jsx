@@ -15,23 +15,32 @@ const UpdateUserModal = ({ userToUpdate, hideModal }) => {
     const value = e.target.value;
     setUser({
       ...user,
-      [e.target.name]: value
+      [e.target.name]: value,
     });
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`/api/v1/users/${user.id}`, { user: { name: user.name, email: user.email, phone: user.phone, title: user.title, status: user.status } })
+    axios
+      .put(`/api/v1/users/${user.id}`, {
+        user: {
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          title: user.title,
+          status: user.status,
+        },
+      })
       .then((response) => {
         hideModal();
         history.push(`?s=-updated_at`);
-        setUsers({ data: { users: [response.data, ...userData] } })
+        setUsers({ data: { users: [response.data, ...userData] } });
       })
       .catch((e) => {
         console.log(e);
-      })
-  }
+      });
+  };
 
   return (
     <div className="modal is-active">
@@ -45,46 +54,88 @@ const UpdateUserModal = ({ userToUpdate, hideModal }) => {
             <div className="field">
               <label className="label">Name</label>
               <div className="control">
-                <input className="input" type="text" name="name" placeholder="Name" value={user.name} onChange={handleChange} />
+                <input
+                  className="input"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={user.name}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="field">
               <label className="label">Email</label>
               <div className="control">
-                <input className="input" type="text" name="email" placeholder="Email" value={user.email} onChange={handleChange} />
+                <input
+                  className="input"
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                  value={user.email}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="field">
               <label className="label">Phone</label>
               <div className="control">
-                <input className="input" type="text" name="phone" placeholder="Phone" value={user.phone} onChange={handleChange} />
+                <input
+                  className="input"
+                  type="text"
+                  name="phone"
+                  placeholder="Phone"
+                  value={user.phone}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="field">
               <label className="label">Title</label>
               <div className="control">
-                <input className="input" type="text" name="title" placeholder="Title" value={user.title} onChange={handleChange} />
+                <input
+                  className="input"
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  value={user.title}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="control">
               <label className="radio">
-                <input type="radio" name="status" value="active" checked={user.status === "active"} onChange={handleChange} />
+                <input
+                  type="radio"
+                  name="status"
+                  value="active"
+                  checked={user.status === "active"}
+                  onChange={handleChange}
+                />
                 Active
               </label>
               <label className="radio">
-                <input type="radio" name="status" value="inactive" checked={user.status === "inactive"} onChange={handleChange}/>
+                <input
+                  type="radio"
+                  name="status"
+                  value="inactive"
+                  checked={user.status === "inactive"}
+                  onChange={handleChange}
+                />
                 Inactive
               </label>
             </div>
           </section>
           <footer className="modal-card-foot">
             <input className="button is-primary" type="submit" value="Submit" />
-            <button className="button" onClick={hideModal}>Cancel</button>
+            <button className="button" onClick={hideModal}>
+              Cancel
+            </button>
           </footer>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default UpdateUserModal;

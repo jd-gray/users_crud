@@ -16,7 +16,7 @@ bundle install
 
 Create and migrate your database:
 
-``` 
+```
 rails db:setup
 ```
 

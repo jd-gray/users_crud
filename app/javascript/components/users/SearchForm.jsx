@@ -14,7 +14,7 @@ const Input = styled.input`
 
 const Button = styled.input`
   width: 100px;
-`
+`;
 
 const SearchForm = () => {
   const history = useHistory();
@@ -23,28 +23,39 @@ const SearchForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     history.push(`?q=${searchValue}`);
-  }
+  };
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
-  }
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
       <div className="columns">
         <div className="column">
           <div className="control">
-            <Input className="input" type="text" name="search" placeholder="Search table..." value={searchValue} onChange={handleChange} />
+            <Input
+              className="input"
+              type="text"
+              name="search"
+              placeholder="Search table..."
+              value={searchValue}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <div className="column">
           <div className="control">
-            <Button className="button is-primary" type="submit" value="Submit" />
+            <Button
+              className="button is-primary"
+              type="submit"
+              value="Submit"
+            />
           </div>
         </div>
       </div>
     </Form>
-  )
-}
+  );
+};
 
 export default SearchForm;

@@ -11,7 +11,7 @@ const Modal = ({ hideModal, children, title }) => {
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Modal;
