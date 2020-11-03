@@ -39,7 +39,7 @@
     }
   },
   "scripts": {
-    "start": "rails s",
+    "start": "bundle exec rails s",
     "cypress:open": "cypress open",
     "cy:run": "cypress run"
   }
