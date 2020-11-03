@@ -27,6 +27,9 @@ blocks:
           - bundle install --deployment --path vendor/bundle
           - sem-version node 10.13.0
           - yarn install --check-files
+          - npx cypress install
+          - cache delete cypress-binary-"$SEMAPHORE_GIT_SHA"
+          - cache store cypress-binary-"$SEMAPHORE_GIT_SHA" /root/.cache/Cypress
           - bundle exec rake db:setup
           - npm start & npx wait-on http://localhost:3000
       jobs:
