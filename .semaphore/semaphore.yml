@@ -8,7 +8,7 @@ blocks:
   - name: Setup
     task:
       jobs:
-        - name: bundle
+        - name: Install Dependencies
           commands:
             - checkout
             - cache restore
@@ -17,6 +17,25 @@ blocks:
             - sem-version node 10.13.0
             - yarn install --check-files
             - cache store
+  - name: Cypress tests
+    task:
+      prologue:
+        commands:
+          - checkout
+          - cache restore
+          - sem-service start postgres
+          - bundle install --deployment --path vendor/bundle
+          - sem-version node 10.13.0
+          - yarn install --check-files
+          - npx cypress install
+          - cache delete cypress-binary-"$SEMAPHORE_GIT_SHA"
+          - cache store cypress-binary-"$SEMAPHORE_GIT_SHA" /root/.cache/Cypress
+          - bundle exec rake db:setup
+          - npm start & npx wait-on http://localhost:3000
+      jobs:
+        - name: Cypress
+          commands:
+            - npx cypress run
   - name: Unit tests
     task:
       prologue:
@@ -32,6 +51,9 @@ blocks:
         - name: RSpec - model tests
           commands:
             - bundle exec rspec spec/models
+        - name: RSpec - requests tests
+          commands:
+            - bundle exec rspec spec/requests
 promotions:
   - name: Heroku Deployment
     pipeline_file: heroku.yml

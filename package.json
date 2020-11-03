@@ -18,7 +18,8 @@
     "react-router-dom": "^5.2.0",
     "react-toastify": "^6.0.0-rc.3",
     "styled-components": "^5.2.0",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "wait-on": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
@@ -38,6 +39,8 @@
     }
   },
   "scripts": {
-    "cypress:open": "cypress open"
+    "start": "bundle exec rails s",
+    "cypress:open": "cypress open",
+    "cy:run": "cypress run"
   }
 }
